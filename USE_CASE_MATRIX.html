@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Use case matrix for the MedCare Patient Record and Care Coordination System.">
+    <title>MedCare System | Use Case Matrix</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --blue: #4776c7;
+            --blue-dark: #315fae;
+            --blue-pale: #e9f0fc;
+            --blue-soft: #f5f8fe;
+            --ink: #17243a;
+            --muted: #617089;
+            --line: #cfdaeb;
+            --paper: #ffffff;
+            --page: #f2f5fa;
+            --shadow: 0 12px 36px rgba(31, 55, 91, 0.09);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--page);
+            color: var(--ink);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.55;
+        }
+
+        .page {
+            width: min(100% - 40px, 1100px);
+            margin: 40px auto;
+        }
+
+        .intro {
+            margin-bottom: 24px;
+        }
+
+        .eyebrow {
+            margin: 0 0 8px;
+            color: var(--blue-dark);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--ink);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            letter-spacing: -0.04em;
+            line-height: 1.15;
+        }
+
+        .subtitle {
+            max-width: 720px;
+            margin: 12px 0 0;
+            color: var(--muted);
+        }
+
+        .system-details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 24px 0 30px;
+        }
+
+        .detail {
+            padding: 14px 16px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--paper);
+        }
+
+        .detail strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--blue-dark);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .detail span {
+            color: var(--ink);
+        }
+
+        .contents {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 0 0 32px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .contents a {
+            display: inline-block;
+            padding: 7px 11px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: var(--paper);
+            color: var(--blue-dark);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .contents a:hover,
+        .contents a:focus-visible {
+            border-color: var(--blue);
+            background: var(--blue-soft);
+        }
+
+        .workflow-group {
+            margin: 34px 0;
+        }
+
+        .workflow-group h2 {
+            margin: 0 0 14px;
+            padding-bottom: 9px;
+            border-bottom: 2px solid var(--blue);
+            color: var(--ink);
+            font-size: 1.3rem;
+            letter-spacing: -0.02em;
+        }
+
+        .use-case {
+            margin: 16px 0 22px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--paper);
+            box-shadow: var(--shadow);
+            break-inside: avoid;
+        }
+
+        .use-case h3 {
+            margin: 0;
+            padding: 12px 16px;
+            background: var(--blue);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        th,
+        td {
+            padding: 11px 15px;
+            border-top: 1px solid var(--line);
+            text-align: left;
+            vertical-align: top;
+            overflow-wrap: anywhere;
+        }
+
+        th {
+            width: 190px;
+            background: var(--blue-pale);
+            color: #233c63;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        td {
+            color: #26354b;
+        }
+
+        tbody tr:nth-child(even) td {
+            background: #fbfcff;
+        }
+
+        ol.flow {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+
+        ol.flow li + li {
+            margin-top: 5px;
+        }
+
+        .note {
+            margin: 18px 0;
+            padding: 14px 16px;
+            border-left: 4px solid var(--blue);
+            border-radius: 4px 8px 8px 4px;
+            background: var(--blue-soft);
+            color: #34445d;
+        }
+
+        footer {
+            margin-top: 36px;
+            padding: 18px 0;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                width: min(100% - 24px, 1100px);
+                margin: 24px auto;
+            }
+
+            .system-details {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .use-case {
+                border-radius: 8px;
+            }
+
+            th,
+            td {
+                padding: 9px 10px;
+                font-size: 0.9rem;
+            }
+
+            th {
+                width: 112px;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+
+            .page {
+                width: 100%;
+                margin: 0;
+            }
+
+            .contents {
+                display: none;
+            }
+
+            .use-case {
+                box-shadow: none;
+            }
+
+            .use-case h3 {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            th {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="intro">
+            <p class="eyebrow">System Documentation</p>
+            <h1>MedCare Use Case Matrix</h1>
+            <p class="subtitle">A functional overview of the MedCare Patient Record and Care Coordination System workflows and their actors.</p>
+
+            <div class="system-details">
+                <div class="detail">
+                    <strong>System</strong>
+                    <span>MedCare Patient Record and Care Coordination System</span>
+                </div>
+                <div class="detail">
+                    <strong>Scope</strong>
+                    <span>Authentication, patient care, appointments, prescriptions, inventory, and care coordination</span>
+                </div>
+            </div>
+
+            <nav aria-label="Use case sections">
+                <ul class="contents">
+                    <li><a href="#patient-access">Patient Access</a></li>
+                    <li><a href="#doctor-workflows">Doctor Workflows</a></li>
+                    <li><a href="#staff-workflows">Staff Workflows</a></li>
+                    <li><a href="#care-coordination">Care Coordination</a></li>
+                    <li><a href="#patient-appointments">Patient Appointments</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="workflow-group" id="patient-access" aria-labelledby="patient-access-heading">
+            <h2 id="patient-access-heading">Authentication and Patient Access</h2>
+
+            <article class="use-case" id="uc-01">
+                <h3>UC-01: Sign In</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Doctor, Staff, or Patient</td></tr>
+                        <tr><th scope="row">Trigger</th><td>A user opens the sign-in page and submits their username and password.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The user enters credentials.</li><li>The system validates the credentials.</li><li>The system starts an authenticated session and opens the dashboard for the user's role.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The user is authenticated and can access pages permitted for their role.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Authentication and database services</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-02">
+                <h3>UC-02: Sign Out</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Authenticated user</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The user selects the sign-out action.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The system ends the user's session.</li><li>The system redirects the user to the sign-in page.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The session is no longer authenticated.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Authentication service</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-03">
+                <h3>UC-03: Register Patient Account</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>New patient</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The patient submits the patient-account registration form.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The patient enters account credentials and required personal and contact information.</li><li>The system validates the submitted information.</li><li>The system creates the patient account and associated patient record.</li><li>The patient is signed in and redirected to the patient dashboard.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>A patient account and patient record are available to the patient, subject to successful validation and account linkage.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Authentication and database services</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-04">
+                <h3>UC-04: View Personal Health Information</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Patient</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The patient opens their health record, treatments, or prescriptions.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The system identifies the patient associated with the signed-in account.</li><li>The system retrieves and displays that patient's permitted information.</li><li>The patient selects a treatment or prescription to view its details, when available.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The patient has viewed their own health information; no other patient's information is disclosed.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Doctor or Staff, as the source of clinical records</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-05">
+                <h3>UC-05: Access Health Education</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Patient</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The patient opens the health education library or selects a resource.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The system displays available health education resources.</li><li>The patient selects a resource.</li><li>The system displays the resource content.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The selected health education resource is displayed to the patient.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Staff, as the resource manager</td></tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+
+        <section class="workflow-group" id="doctor-workflows" aria-labelledby="doctor-workflows-heading">
+            <h2 id="doctor-workflows-heading">Doctor Workflows</h2>
+
+            <article class="use-case" id="uc-06">
+                <h3>UC-06: Manage Patient Record</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Doctor</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The doctor searches for a patient or starts a patient registration.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The doctor searches or opens the patient list.</li><li>The doctor views a patient's record or enters information for a new patient.</li><li>The system validates and saves submitted patient information.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The patient record is available for authorized care workflows.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Patient</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-07">
+                <h3>UC-07: Schedule or Manage Appointment</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Doctor</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The doctor opens the appointment calendar or starts an appointment action.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The doctor selects a patient, date, time, duration, and appointment details.</li><li>The system checks for an overlapping appointment for that doctor.</li><li>If the time is available, the system saves the appointment.</li><li>The doctor can view, edit, reschedule, or update its status from the calendar.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The appointment is recorded or updated; overlapping appointments for the same doctor are rejected.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Patient</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-08">
+                <h3>UC-08: Record Consultation, Diagnosis, and Treatment</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Doctor</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The doctor starts a consultation for a patient.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The doctor selects the patient.</li><li>The doctor records consultation details, diagnosis, and treatment information.</li><li>The system validates and saves the clinical record.</li><li>The record becomes part of the patient's consultation history.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The consultation and related clinical information are saved to the patient's record.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Patient</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-09">
+                <h3>UC-09: Create Prescription</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Doctor</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The doctor chooses to prescribe medication for a patient.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The doctor selects the patient and enters prescription details and medication items.</li><li>The system checks medication availability and expiration status.</li><li>The system saves the prescription when the submitted items pass validation.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>A prescription is recorded for the patient and can be reviewed by authorized users.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Staff, for prescription dispensing</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-10">
+                <h3>UC-10: Set Patient Priority</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Doctor</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The doctor identifies a need to classify or update a patient's care priority.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The doctor opens the patient's record.</li><li>The doctor selects a priority level.</li><li>The system saves the updated priority.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The patient's priority classification is updated.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Staff</td></tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+
+        <section class="workflow-group" id="staff-workflows" aria-labelledby="staff-workflows-heading">
+            <h2 id="staff-workflows-heading">Staff Workflows</h2>
+
+            <article class="use-case" id="uc-11">
+                <h3>UC-11: Manage Inventory and Stock</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Staff</td></tr>
+                        <tr><th scope="row">Trigger</th><td>Staff adds or edits an inventory item, records stock received or removed, or reviews stock alerts.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>Staff selects an inventory action.</li><li>Staff enters the item or stock transaction details.</li><li>The system validates the quantity and item information.</li><li>The system saves the change and records the inventory transaction.</li><li>Staff reviews low-stock or expiration alerts as needed.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>Inventory quantities and transaction history reflect the accepted change; invalid negative stock is prevented.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Doctor, when checking medication availability</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-12">
+                <h3>UC-12: Dispense Prescription</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Staff</td></tr>
+                        <tr><th scope="row">Trigger</th><td>Staff opens an eligible prescription for dispensing.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>Staff reviews the prescription and its medication items.</li><li>The system checks available stock and medication expiration status.</li><li>Staff confirms dispensing.</li><li>The system records the dispense action, deducts stock, and logs the inventory transaction.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The prescription status and inventory reflect the dispensing transaction; expired or insufficient stock is not dispensed.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Doctor, as the prescription author; Patient, as recipient</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-13">
+                <h3>UC-13: Maintain Health Education Resources</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Staff</td></tr>
+                        <tr><th scope="row">Trigger</th><td>Staff creates, edits, publishes, or views a health education resource.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>Staff opens health education management.</li><li>Staff enters or updates resource information.</li><li>The system validates and saves the resource.</li><li>Published resources are made available in the patient library.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The resource is saved and, when published, available to patients.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Patient</td></tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+
+        <section class="workflow-group" id="care-coordination" aria-labelledby="care-coordination-heading">
+            <h2 id="care-coordination-heading">Shared Care Coordination</h2>
+
+            <article class="use-case" id="uc-14">
+                <h3>UC-14: Record Treatment Progress</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Doctor or Staff</td></tr>
+                        <tr><th scope="row">Trigger</th><td>An authorized care team member records an update for a patient's treatment.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The user selects a patient and associated treatment.</li><li>The user enters the progress update.</li><li>The system validates and saves the update in the treatment history.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The progress update is linked to the selected treatment and can be reviewed by authorized users.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Patient</td></tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="use-case" id="uc-15">
+                <h3>UC-15: Send and Review Team Messages</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Doctor or Staff</td></tr>
+                        <tr><th scope="row">Trigger</th><td>A care team member opens team messages to send a message or review received messages.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>The sender selects a recipient and enters the message, optionally linking it to a patient.</li><li>The system validates and saves the message.</li><li>The recipient reviews the message and can mark it as read.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The message is available to its recipient with its read status recorded.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>The selected healthcare team recipient; Patient, when the message is linked to a patient record</td></tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+
+        <section class="workflow-group" id="patient-appointments" aria-labelledby="patient-appointments-heading">
+            <h2 id="patient-appointments-heading">Patient Appointment Workflows</h2>
+
+            <article class="use-case" id="uc-16">
+                <h3>UC-16: Request or Cancel Own Appointment</h3>
+                <table>
+                    <tbody>
+                        <tr><th scope="row">Primary Actor</th><td>Patient</td></tr>
+                        <tr><th scope="row">Trigger</th><td>The patient opens My Appointments to request an appointment or cancel an existing appointment.</td></tr>
+                        <tr><th scope="row">Basic Flow</th><td><ol class="flow"><li>To request an appointment, the patient selects a doctor, date, time, appointment type, and reason, then submits the request.</li><li>The system validates and records the appointment request for the selected doctor.</li><li>To cancel, the patient selects one of their own eligible appointments and confirms cancellation.</li><li>The system verifies ownership and eligibility before updating the appointment status.</li></ol></td></tr>
+                        <tr><th scope="row">Post Condition</th><td>The appointment request is recorded or the patient's eligible appointment is cancelled; the patient cannot cancel another patient's appointment.</td></tr>
+                        <tr><th scope="row">Secondary Actor</th><td>Doctor</td></tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+
+        <aside class="note">
+            <strong>Note:</strong> Access to patient and clinical information depends on the user's authenticated role and the system's authorization checks. This matrix describes the application's workflows at a functional level and does not specify internal database or interface implementation details.
+        </aside>
+
+        <footer>MedCare Patient Record and Care Coordination System</footer>
+    </main>
+</body>
+</html>
